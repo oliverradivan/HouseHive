@@ -1,0 +1,68 @@
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+  background-color: #1f2330;
+  color: white;
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+.navbar-brand {
+  font-weight: 700;
+  font-size: 1.2rem;
+  color: #fff;
+  text-decoration: none;
+}
+
+.navbar-links {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.navbar-links a {
+  color: #d8d4cd;
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.navbar-links a:hover,
+.navbar-links a.active {
+  color: #fff;
+}
+
+.navbar-links a.active {
+  border-bottom: 2px solid #8a6d54;
+  padding-bottom: 4px;
+}
+
+/* Optional CTA-style link/button in the navbar */
+.navbar-links .button-primary {
+  background: #6b4f3b;
+  color: #fff;
+  padding: 0.45rem 1rem;
+  border-radius: 8px;
+  transition: background 0.2s ease;
+}
+
+.navbar-links .button-primary:hover {
+  background: #8a6d54;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .navbar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 1rem;
+  }
+
+  .navbar-links {
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+}

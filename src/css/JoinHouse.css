@@ -1,0 +1,229 @@
+.jh-page {
+  min-height: 100vh;
+  background: linear-gradient(to bottom, #fffbeb, #ffffff, #fff7ed);
+  font-family: system-ui, -apple-system, sans-serif;
+  color: #1c1917;
+}
+
+/* Nav */
+.jh-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 72rem;
+  margin: 0 auto;
+  padding: 20px 24px;
+}
+
+.jh-brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+}
+
+.jh-brand-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: linear-gradient(to bottom right, #fbbf24, #f97316);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 10px 20px -8px rgba(245, 158, 11, 0.4);
+}
+
+.jh-brand-name {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: #1c1917;
+}
+
+.jh-back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: #78716c;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 8px 12px;
+  border-radius: 8px;
+  transition: color 0.15s ease, background-color 0.15s ease;
+}
+
+.jh-back-link:hover {
+  color: #d97706;
+  background: #fff7ed;
+}
+
+/* Container */
+.jh-container {
+  max-width: 32rem;
+  margin: 0 auto;
+  padding: 32px 24px 96px;
+}
+
+.jh-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.jh-header-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 16px;
+  background: linear-gradient(to bottom right, #fbbf24, #f97316);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 10px 20px -8px rgba(245, 158, 11, 0.4);
+  margin: 0 auto 20px;
+}
+
+.jh-title {
+  font-size: 30px;
+  font-weight: 700;
+  color: #1c1917;
+  margin: 0 0 8px;
+}
+
+.jh-subtitle {
+  color: #78716c;
+  margin: 0;
+}
+
+/* Form */
+.jh-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.jh-code-input {
+  width: 100%;
+  height: 56px;
+  padding: 0 16px;
+  text-align: center;
+  font-size: 18px;
+  letter-spacing: 0.15em;
+  font-family: "SFMono-Regular", Consolas, monospace;
+  text-transform: uppercase;
+  border-radius: 12px;
+  border: 1px solid #d6d3d1;
+  outline: none;
+  background: #fff;
+  box-sizing: border-box;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.jh-code-input:focus {
+  border-color: #fbbf24;
+  box-shadow: 0 0 0 3px rgba(251, 191, 36, 0.25);
+}
+
+.jh-code-input:disabled {
+  opacity: 0.6;
+}
+
+.jh-error {
+  font-size: 14px;
+  color: #ef4444;
+  text-align: center;
+  margin: 0;
+}
+
+.jh-button {
+  width: 100%;
+  height: 48px;
+  border: none;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.15s ease, background 0.15s ease;
+}
+
+.jh-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.jh-button-dark {
+  background: #1c1917;
+  color: #fff;
+}
+
+.jh-button-dark:not(:disabled):hover {
+  background: #292524;
+}
+
+.jh-button-inline {
+  width: auto;
+  padding: 0 32px;
+}
+
+.jh-card-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: #1c1917;
+  margin: 0 0 12px;
+}
+
+/* Confirmation */
+.jh-confirm {
+  background: #fff;
+  border-radius: 16px;
+  border: 1px solid #fde68a;
+  padding: 32px;
+  text-align: center;
+  box-shadow: 0 20px 40px -20px rgba(245, 158, 11, 0.15);
+}
+
+.jh-confirm-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 999px;
+  background: #fef3c7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 16px;
+}
+
+.jh-confirm-text {
+  font-size: 14px;
+  color: #78716c;
+  margin: 4px 0 24px;
+}
+
+/* Sign in prompt */
+.jh-signin {
+  text-align: center;
+  font-size: 14px;
+  color: #a8a29e;
+  margin-top: 32px;
+}
+
+.jh-link {
+  color: #d97706;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.jh-link:hover {
+  text-decoration: underline;
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  .jh-container {
+    padding: 24px 16px 64px;
+  }
+
+  .jh-title {
+    font-size: 26px;
+  }
+}

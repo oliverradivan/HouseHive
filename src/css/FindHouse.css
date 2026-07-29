@@ -1,0 +1,301 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: #FFFDF8;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #111;
+}
+
+/* ---------- PAGE ---------- */
+
+.home-page {
+    min-height: 100vh;
+    padding: 30px 80px;
+}
+
+/* ---------- NAVBAR ---------- */
+
+.home-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.home-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 34px;
+    font-weight: 700;
+}
+
+.home-brand-icon {
+    width: 46px;
+    height: 46px;
+    border-radius: 12px;
+    background: #FF9800;
+    color: white;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    box-shadow: 0 5px 15px rgba(255,152,0,.35);
+}
+
+.logout-button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    border: none;
+    background: transparent;
+
+    cursor: pointer;
+
+    color: #666;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.logout-button:hover {
+    color: black;
+}
+
+/* ---------- MAIN ---------- */
+
+.home-content {
+    max-width: 760px;
+    margin: 70px auto;
+}
+
+.home-intro {
+    text-align: center;
+    margin-bottom: 55px;
+}
+
+.home-intro h1 {
+    font-size: 58px;
+    font-weight: 700;
+    margin-bottom: 15px;
+}
+
+.home-intro p {
+    font-size: 26px;
+    color: #666;
+}
+
+/* ---------- HOUSE CARD ---------- */
+
+.membership-link {
+    text-decoration: none;
+}
+
+.membership-card {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+
+    border: 2px solid #FFD369;
+    border-radius: 20px;
+
+    padding: 25px 30px;
+
+    background: white;
+
+    transition: .2s;
+
+    margin-bottom: 40px;
+}
+
+.membership-card:hover {
+    transform: translateY(-2px);
+}
+
+.membership-icon {
+    width: 54px;
+    height: 54px;
+
+    border-radius: 14px;
+
+    background: #FFF3CC;
+    color: #F5A000;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.membership-copy {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.membership-copy strong {
+    font-size: 28px;
+    color: black;
+}
+
+.membership-copy span {
+    color: #888;
+    margin-top: 6px;
+    font-size: 18px;
+}
+
+.membership-arrow {
+    color: #FF9800;
+}
+
+/* ---------- ACTIONS ---------- */
+
+.home-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+}
+
+.action-card {
+    border-radius: 22px;
+    padding: 32px;
+    text-decoration: none;
+    transition: .25s;
+}
+
+.action-card:hover {
+    transform: translateY(-4px);
+}
+
+/* ---------- LIGHT CARD ---------- */
+
+.action-card-light {
+    background: white;
+    border: 1px solid #E6E6E6;
+}
+
+.action-icon-light {
+    width: 56px;
+    height: 56px;
+
+    border-radius: 14px;
+
+    background: #FFF3CC;
+    color: #F5A000;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-bottom: 25px;
+}
+
+/* ---------- DARK CARD ---------- */
+
+.action-card-dark {
+    background: #1E1A17;
+    color: white;
+}
+
+.action-icon-dark {
+    width: 56px;
+    height: 56px;
+
+    border-radius: 14px;
+
+    background: #4A3A17;
+    color: #FFC928;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-bottom: 25px;
+}
+
+/* ---------- TEXT ---------- */
+
+.action-card h2 {
+    font-size: 34px;
+    margin-bottom: 15px;
+}
+
+.action-card p {
+    line-height: 1.7;
+    font-size: 18px;
+    color: #777;
+    margin-bottom: 30px;
+}
+
+.action-card-dark p {
+    color: #AFAFAF;
+}
+
+.action-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+
+    font-weight: 700;
+    color: #F5A000;
+}
+
+.action-card-dark .action-link {
+    color: #FFD447;
+}
+
+/* ---------- LOADING ---------- */
+
+.home-loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.home-spinner {
+    width: 55px;
+    height: 55px;
+    border: 5px solid #ddd;
+    border-top-color: orange;
+    border-radius: 50%;
+    animation: spin .8s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* ---------- RESPONSIVE ---------- */
+
+@media (max-width:900px) {
+
+.home-page {
+    min-height: 100vh;
+
+    background:
+        radial-gradient(circle at 50% -15%, rgba(255,183,77,.22), transparent 45%),
+        radial-gradient(circle at 10% 10%, rgba(255,200,100,.08), transparent 35%),
+        #FFFDF8;
+}
+    .home-actions {
+        grid-template-columns: 1fr;
+    }
+
+    .membership-card {
+        flex-wrap: wrap;
+    }
+
+    .home-intro h1 {
+        font-size: 42px;
+    }
+
+    .home-intro p {
+        font-size: 20px;
+    }
+}
