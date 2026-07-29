@@ -1,0 +1,274 @@
+Expense Feature Guide
+=====================
+
+Purpose
+-------
+
+The expense feature lets house members split shared costs.
+
+When a member pays for something, the backend creates an expense and expense
+shares. The payer gets a positive balance because they paid more than their own
+share. Other participants get negative balances because they owe their shares.
+
+Settlements record real repayments between members and reduce the open balances.
+
+
+Data Model
+----------
+
+Expense
+~~~~~~~
+
+Represents one shared purchase or bill.
+
+Important fields:
+
+- house_id: the house this expense belongs to.
+- paid_by_member_id: the house member who paid.
+- title: short expense name.
+- description: optional notes.
+- amount_cents: total amount in cents/agorot.
+
+The payer is always taken from the authenticated user. The client does not send
+paid_by_member_id when creating an expense.
+
+
+ExpenseShare
+~~~~~~~~~~~~
+
+Represents how much each participant owes for one expense.
+
+Important fields:
+
+- expense_id: the expense this share belongs to.
+- house_id: the house this share belongs to.
+- member_id: the house member who owes this share.
+- amount_cents: the member's share.
+
+Each member can have only one share per expense.
+
+
+Settlement
+~~~~~~~~~~
+
+Represents an actual repayment between members.
+
+Important fields:
+
+- house_id: the house this settlement belongs to.
+- from_member_id: the member who paid money back.
+- to_member_id: the member who received money.
+- amount_cents: repayment amount.
+- note: optional note, such as "cash" or "bank transfer".
+- settled_at: when the repayment happened. Defaults to database current time.
+
+
+Create Expense
+--------------
+
+Endpoint:
+
+POST /api/v1/houses/{house_id}/expenses
+
+Authentication:
+
+Send the access token:
+
+Authorization: Bearer <access_token>
+
+
+Default Equal Split
+~~~~~~~~~~~~~~~~~~~
+
+If participant_member_ids is omitted, the expense is split equally between all
+current members of the house.
+
+Request:
+
+{
+  "title": "Internet bill",
+  "description": "July",
+  "amount_cents": 12000
+}
+
+Behavior:
+
+- The payer is the authenticated user's HouseMember record.
+- All house members are loaded automatically.
+- The amount is split equally.
+- Remainder cents are assigned deterministically by sorted member ID.
+
+
+Selected-Member Split
+~~~~~~~~~~~~~~~~~~~~~
+
+If only some members participated, send participant_member_ids.
+
+Request:
+
+{
+  "title": "Dinner",
+  "amount_cents": 6000,
+  "participant_member_ids": [
+    "member-id-1",
+    "member-id-2"
+  ]
+}
+
+Behavior:
+
+- Only those members receive expense shares.
+- Every participant must belong to the house.
+- Duplicate participant IDs are rejected.
+
+
+List Expenses
+-------------
+
+Endpoint:
+
+GET /api/v1/houses/{house_id}/expenses
+
+Returns all expenses for the house, newest first, including their shares.
+
+
+Read One Expense
+----------------
+
+Endpoint:
+
+GET /api/v1/houses/{house_id}/expenses/{expense_id}
+
+Returns one expense and its shares.
+
+
+Delete Expense
+--------------
+
+Endpoint:
+
+DELETE /api/v1/houses/{house_id}/expenses/{expense_id}
+
+Only the payer or a house admin can delete an expense.
+
+Deleting an expense also deletes its expense shares. This recalculates balances
+as if that expense never happened.
+
+
+Balances
+--------
+
+Endpoint:
+
+GET /api/v1/houses/{house_id}/balances
+
+Returns each house member's net balance.
+
+Example response:
+
+[
+  {
+    "member_id": "alice-member-id",
+    "balance_cents": 6000
+  },
+  {
+    "member_id": "bob-member-id",
+    "balance_cents": -3000
+  },
+  {
+    "member_id": "charlie-member-id",
+    "balance_cents": -3000
+  }
+]
+
+Meaning:
+
+- Positive balance: this member should receive money.
+- Negative balance: this member owes money.
+- Zero balance: this member is settled.
+
+Balance formula:
+
+balance =
+  total_expenses_paid
+  - total_expense_shares
+  + total_settlements_sent
+  - total_settlements_received
+
+
+Suggested Debts
+---------------
+
+Endpoint:
+
+GET /api/v1/houses/{house_id}/debts
+
+Returns simplified suggested repayments.
+
+Example response:
+
+[
+  {
+    "from_member_id": "bob-member-id",
+    "from_username": "bob",
+    "to_member_id": "alice-member-id",
+    "to_username": "alice",
+    "amount_cents": 3000
+  },
+  {
+    "from_member_id": "charlie-member-id",
+    "from_username": "charlie",
+    "to_member_id": "alice-member-id",
+    "to_username": "alice",
+    "amount_cents": 3000
+  }
+]
+
+This endpoint does not create data. It only calculates the current suggested
+payments from expenses, shares, and settlements.
+
+
+Create Settlement
+-----------------
+
+Endpoint:
+
+POST /api/v1/houses/{house_id}/settlements
+
+Request:
+
+{
+  "from_member_id": "bob-member-id",
+  "to_member_id": "alice-member-id",
+  "amount_cents": 3000,
+  "note": "cash"
+}
+
+Behavior:
+
+- Both members must belong to the house.
+- from_member_id and to_member_id must be different.
+- amount_cents must be positive.
+- settled_at defaults to database current time if omitted.
+
+
+List Settlements
+----------------
+
+Endpoint:
+
+GET /api/v1/houses/{house_id}/settlements
+
+Returns repayments for the house, ordered by settled_at descending.
+
+
+Important Rules
+---------------
+
+- Money is stored as integer cents/agorot.
+- There is no currency field. The app assumes one currency.
+- House deletion is blocked if financial history exists.
+- House member deletion is blocked if the member appears in expenses, shares, or
+  settlements.
+- The API does not trust the client to say who paid an expense. The payer is
+  derived from the authenticated user.
